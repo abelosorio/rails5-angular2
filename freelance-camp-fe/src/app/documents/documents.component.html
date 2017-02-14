@@ -1,6 +1,6 @@
 <div class="clearfix">
   <h1>
-    Documents
+    {{ pageTitle }}
   </h1>
 
   <div *ngFor="let doc of documents">
@@ -8,7 +8,9 @@
     <em>{{ doc.description }}</em>
 
     <div>
-      <a target="_blank" href="{{ doc.file_url }}">Download File</a>
+      <a target="_blank" href="{{ doc.file_url }}">
+        Download File
+      </a>
     </div>
 
     <p>

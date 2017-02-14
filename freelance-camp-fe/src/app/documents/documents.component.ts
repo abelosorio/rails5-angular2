@@ -7,6 +7,7 @@ import { Document } from './document';
   templateUrl: 'documents.component.html'
 })
 export class DocumentsComponent {
+  pageTitle: string = 'Document Dashboard';
 
   // documents will be an array of Documents
   documents: Document[] = [
