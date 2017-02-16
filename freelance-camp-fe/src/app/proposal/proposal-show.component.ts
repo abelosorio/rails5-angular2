@@ -1,0 +1,28 @@
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
+
+import { Proposal } from './proposal';
+
+@Component({
+  selector: 'proposal-show',
+  templateUrl: 'proposal-show.component.html'
+})
+export class ProposalShowComponent implements OnInit {
+
+  id:      number;
+  routeId: any;
+
+  constructor(
+    private route: ActivatedRoute
+  ) {}
+
+  ngOnInit(): void {
+    this.routeId = this.route.params.subscribe(
+      params => {
+        // With '+' prefix, Angular will converts the value in a number
+        this.id = +params['id'];
+      }
+    )
+  }
+
+}
