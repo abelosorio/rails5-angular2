@@ -1,12 +1,62 @@
-<div class="clearfix">
-  <h1>
-    Navigation
-  </h1>
+<nav class="navbar navbar-toggleable-md navbar-light bg-faded nav-styles">
+  <div class="container">
+    <ul class="nav navbar-nav">
 
-  <a routerLink="/home">Home</a>
-  <a routerLink="/documents">Docs</a>
-  <a routerLink="/proposals">Proposals</a>
-  <a routerLink="/proposals/new">New Proposal</a>
+      <!-- Home -->
+      <li class="nav-item">
+        <a class="nav-link"
+           title="Home"
+           routerLink="/home"
+           routerLinkActive="active">
+          Home
+        </a>
+      </li>
 
+      <!-- Docs -->
+      <li class="nav-item">
+        <a class="nav-link"
+           title="Documents"
+           routerLink="/documents"
+           routerLinkActive="active">
+          Docs
+        </a>
+      </li>
+
+      <!-- Proposals -->
+      <li>
+        <div ngbDropdown class="d-inline-block dropdown-links dropdown">
+          <button class="btn btn-outline-primary"
+                  id="proposalDropdown"
+                  ngbDropdownToggle>
+            Proposals
+          </button>
+          <div class="dropdown-menu" aria-labelledby="proposalDropdown">
+
+            <!-- Proposals list -->
+            <a class="dropdown-item"
+               title="Proposal list"
+               routerLink="/proposals"
+               routerLinkActive="active"
+               [routerLinkActiveOptions]="{exact: true}">
+              Proposals
+            </a>
+
+            <!-- New Proposal -->
+            <a class="dropdown-item"
+               title="Create new Proposal"
+               routerLink="/proposals/new"
+               routerLinkActive="active">
+              New Proposal
+            </a>
+
+          </div>
+        </div>
+      </li>
+
+    </ul> <!-- /.container navbar-nav -->
+  </div> <!-- /.container -->
+</nav>
+
+<div class="app-body">
   <router-outlet></router-outlet>
 </div>
