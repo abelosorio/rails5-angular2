@@ -1,51 +1,52 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs/Rx';
 
 import { Proposal } from './proposal';
+import { ProposalService } from './proposal.service';
 
 @Component({
   selector: 'proposal-list',
   templateUrl: 'proposal-list.component.html',
-  styleUrls: ['proposal-list.component.css']
+  styleUrls: ['proposal-list.component.css'],
+  providers: [ProposalService]
 })
-export class ProposalListComponent {
+export class ProposalListComponent implements OnInit {
 
-  proposalOne: Proposal = new Proposal(
-    1,                      // id
-    'ABC Company',          // customer
-    'http://portfolio.com', // portfolio_url
-    'Ruby on Rails',        // tools
-    150,                    // estimated_hours
-    15,                     // hourly_rate
-    10,                     // weeks_to_complete
-    'client@example.com'
-  )
+  proposals: Proposal[];
+  errorMessage: string;
+  mode: 'Observable';
 
-  proposalTwo: Proposal = new Proposal(
-    2,                      // id
-    'XYZ Company',          // customer
-    'http://portfolio.com', // portfolio_url
-    'Ruby on Rails',        // tools
-    150,                    // estimated_hours
-    15,                     // hourly_rate
-    10,                     // weeks_to_complete
-    'client@example.com'
-  )
+  constructor(
+    private proposalService: ProposalService
+  ) {}
 
-  proposalThree : Proposal = new Proposal(
-    3,                      // id
-    'Something Company',    // customer
-    'http://portfolio.com', // portfolio_url
-    'Ruby on Rails',        // tools
-    150,                    // estimated_hours
-    15,                     // hourly_rate
-    10,                     // weeks_to_complete
-    'client@example.com'
-  )
+  ngOnInit() {
+    let timer = Observable.timer(0, 5000);
+    timer.subscribe(() => this.getProposals());
+  }
 
-  proposals: Proposal[] = [
-    this.proposalOne,
-    this.proposalTwo,
-    this.proposalThree
-  ]
+  getProposals() {
+    this.proposalService.getProposals()
+        .subscribe(
+          proposals => this.proposals = proposals,
+          error => this.errorMessage = <any> error
+        );
+  }
+
+  private handleError(error: Response | any) {
+    let errMsg: string;
+
+    if (error instanceof Response) {
+      const body = error.json() || '';
+      const err = body.error || JSON.stringify(body);
+      errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
+    } else {
+      errMsg = error.message ? error.message : error.toString();
+    }
+
+    console.error(errMsg);
+
+    return Observable.throw(errMsg);
+  }
 
 }
